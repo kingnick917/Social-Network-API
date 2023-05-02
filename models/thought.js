@@ -1,16 +1,37 @@
-`thoughtText`
-  * String
-  * Required
-  * Must be between 1 and 280 characters
+const { Schema, Types } = require('mongoose');
+const reactionSchema = require('./Reaction');
 
-* `createdAt`
-  * Date
-  * Set default value to the current timestamp
-  * Use a getter method to format the timestamp on query
 
-* `username` (The user that created this thought)
-  * String
-  * Required
+const thoughtSchema = new Schema(
+    {
 
-* `reactions` (These are like replies)
-  * Array of nested documents created with the `reactionSchema`
+        thoughtText:{
+            type: String,
+           Required: true,
+           maxlength: 200,
+           minlength: 1,
+            },
+           createdAt:{
+            type: Date,
+            default: Date.now
+           },
+           username:{
+            type:String,
+            Required: true
+           },
+           reactions:[reactionSchema]
+       
+       
+       },
+       {
+        toJSON: {
+            getters: true,
+          },
+          id: false,
+        }
+  );
+  const Thought = model('Thought', thoughtSchema);
+
+
+  module.exports = Thought;
+

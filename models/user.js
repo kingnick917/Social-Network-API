@@ -1,5 +1,42 @@
+const { Schema, Types } = require('mongoose');
+
+
+const assignmentSchema = new Schema(
+    {
+
+        username:{
+        type:String,
+         Unique:true,
+         Required: true,
+         Trim: true,
+        },
+       email:{
+        type:String,
+        required: true,
+         Unique:true,
+         match: /.+\@.+\..+/,
+      },
+      * `thoughts`
+        * Array of `_id` values referencing the `Thought` model
+      
+      * `friends`
+        * Array of `_id` values referencing the `User` model (self-reference)
+    
+       
+       }
+       
+  );
+
+
+
+
+
+
+
+
+
 * `username`
-  * String
+  type:String
   * Unique
   * Required
   * Trimmed
