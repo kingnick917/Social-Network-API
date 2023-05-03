@@ -1,54 +1,47 @@
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 
-const assignmentSchema = new Schema(
-    {
+const userSchema = new Schema(
+  {
 
-        username:{
-        type:String,
-         Unique:true,
-         Required: true,
-         Trim: true,
-        },
-       email:{
-        type:String,
-        required: true,
-         Unique:true,
-         match: /.+\@.+\..+/,
+    username: {
+      type: String,
+      Unique: true,
+      Required: true,
+      Trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      Unique: true,
+      match: /.+\@.+\..+/,
+    },
+    thoughts: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought',
       },
-      * `thoughts`
-        * Array of `_id` values referencing the `Thought` model
-      
-      * `friends`
-        * Array of `_id` values referencing the `User` model (self-reference)
-    
-       
-       }
-       
+    ],
+
+    friends: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+      },
+    ],
+
+
+  },
+  {
+    toJSON: {
+        getters: true,
+      },
+      id: false,
+    }  
   );
 
+  const User = model('User', userSchema);
 
 
+  module.exports = User;
 
-
-
-
-
-
-* `username`
-  type:String
-  * Unique
-  * Required
-  * Trimmed
-
-* `email`
-  * String
-  * Required
-  * Unique
-  * Must match a valid email address (look into Mongoose's matching validation)
-
-* `thoughts`
-  * Array of `_id` values referencing the `Thought` model
-
-* `friends`
-  * Array of `_id` values referencing the `User` model (self-reference)
